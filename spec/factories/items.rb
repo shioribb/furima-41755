@@ -9,7 +9,6 @@ FactoryBot.define do
     shopping_date_id { 2 }
     price { Faker::Number.between(from: 300, to: 9_999_999) }
     image { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/123.jpg'), 'image/jpg') }
-
     association :user
   end
 end

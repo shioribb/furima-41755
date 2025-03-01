@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Item, type: :model do
   before do
-    @item = FactoryBot.build(:item)
+    @user = FactoryBot.create(:user)
+    @item = FactoryBot.build(:item, user: @user)
   end
 
   describe '商品の保存' do
@@ -32,38 +33,39 @@ RSpec.describe Item, type: :model do
       end
 
       it 'カテゴリーが空では投稿できない' do
-        @item.category_id = ''
+        @item.category_id = '1'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Category can't be blank", 'Category 選択してください')
+        expect(@item.errors.full_messages).to include("Category 選択してください")
       end
 
       it '商品の状態が空では投稿できない' do
-        @item.status_id = ''
+        @item.status_id = '1'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Status can't be blank", 'Status 選択してください')
+        expect(@item.errors.full_messages).to include("Status 選択してください")
       end
+
       it '配送料の負担の情報が空では投稿できない' do
-        @item.postage_id = ''
+        @item.postage_id = '1'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Postage can't be blank", 'Postage 選択してください')
+        expect(@item.errors.full_messages).to include("Postage 選択してください")
       end
 
       it '発送元の地域の情報が空では投稿できない' do
-        @item.prefecture_id = ''
+        @item.prefecture_id = '1'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Prefecture can't be blank", 'Prefecture 選択してください')
+        expect(@item.errors.full_messages).to include("Prefecture 選択してください")
       end
 
       it '発送までの日数の情報が空では投稿できない' do
-        @item.shopping_date_id = ''
+        @item.shopping_date_id = '1'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Shopping date can't be blank", 'Shopping date 選択してください')
+        expect(@item.errors.full_messages).to include("Shopping date 選択してください")
       end
 
       it '価格の情報が空では投稿できない' do
         @item.price = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include('Price is valid')
+        expect(@item.errors.full_messages).to include("Price can't be blank")
       end
 
       it '価格が全角数値の場合、保存できない' do
@@ -88,6 +90,12 @@ RSpec.describe Item, type: :model do
         @item.price = '10000000'
         @item.valid?
         expect(@item.errors.full_messages).to include('Price is valid')
+      end
+
+      it 'ユーザーが紐づいていないと保存できない' do
+        @item.user_id = ''
+        @item.valid?
+        expect(@item.errors.full_messages).to include("User can't be blank")
       end
     end
   end

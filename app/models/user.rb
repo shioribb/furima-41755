@@ -15,5 +15,4 @@ class User < ApplicationRecord
                        if: :password_required?
 
   has_many :items
-  has_many :buyers
 end

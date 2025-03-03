@@ -34,31 +34,31 @@ RSpec.describe Item, type: :model do
       it 'カテゴリーが空では投稿できない' do
         @item.category_id = '1'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Category 選択してください")
+        expect(@item.errors.full_messages).to include('Category 選択してください')
       end
 
       it '商品の状態が空では投稿できない' do
         @item.status_id = '1'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Status 選択してください")
+        expect(@item.errors.full_messages).to include('Status 選択してください')
       end
 
       it '配送料の負担の情報が空では投稿できない' do
         @item.postage_id = '1'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Postage 選択してください")
+        expect(@item.errors.full_messages).to include('Postage 選択してください')
       end
 
       it '発送元の地域の情報が空では投稿できない' do
         @item.prefecture_id = '1'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Prefecture 選択してください")
+        expect(@item.errors.full_messages).to include('Prefecture 選択してください')
       end
 
       it '発送までの日数の情報が空では投稿できない' do
         @item.shopping_date_id = '1'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Shopping date 選択してください")
+        expect(@item.errors.full_messages).to include('Shopping date 選択してください')
       end
 
       it '価格の情報が空では投稿できない' do
@@ -94,7 +94,7 @@ RSpec.describe Item, type: :model do
       it 'ユーザーが紐づいていないと保存できない' do
         @item.user = nil
         @item.valid?
-        expect(@item.errors.full_messages).to include("User must exist")
+        expect(@item.errors.full_messages).to include('User must exist')
       end
     end
   end

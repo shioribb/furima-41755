@@ -1,7 +1,12 @@
 class BuyersController < ApplicationController
   before_action :set_item, only:[:index, :create]
+  before_action :authenticate_user!
 
   def index
+    if @item.user == current_user
+      redirect_to root_path
+      return
+    end
     @buyer_address = BuyerAddress.new
   end
 

@@ -3,12 +3,12 @@ class BuyerAddress
   attr_accessor :postal_code, :prefecture_id, :city, :house_number, :building_name, :telephone_number, :user_id, :item_id
 
   with_options presence: true do
-    validates :postal_code, format: {with: /\A[0-9]{3}-[0-9]{4}\z/, message: "は「3桁-4桁」の半角数字で入力してください"}
+    validates :postal_code, format: {with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Enter it as follows (e.g. 123-4567)"}
     validates :city
     validates :house_number
-    validates :telephone_number, format: { with: /\A\d{10,11}\z/, message: "は10桁以上11桁以内の半角数字で入力してください"}
-    validates :prefecture_id, numericality: {other_than: 0, message: "都道府県を選択してください"}
+    validates :telephone_number, format: { with: /\A\d{10,11}\z/, message: "is invalid. Input only number" }, length: { minimum: 10, maximum: 11, message: "is too short" }
   end
+  validates :prefecture_id, numericality: { other_than: 1, message: "can't be blank" }
 
   def save
     buyer = Buyer.create(user_id: user_id, item_id: item_id)

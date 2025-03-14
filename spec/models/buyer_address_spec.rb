@@ -7,9 +7,8 @@ RSpec.describe BuyerAddress, type: :model do
     @buyer_address = FactoryBot.build(:buyer_address, user_id: @user.id, item_id: @item.id)
     sleep(0.1)
   end
-  
-  describe '商品購入情報の保存' do
 
+  describe '商品購入情報の保存' do
     context '内容に問題ない場合' do
       it 'すべての値とtokenがあれば保存できること' do
         expect(@buyer_address).to be_valid
@@ -29,7 +28,7 @@ RSpec.describe BuyerAddress, type: :model do
       it 'postal_codeが半角のハイフンを含んだ正しい形式でないと保存できないこと' do
         @buyer_address.postal_code = '1234567'
         @buyer_address.valid?
-        expect(@buyer_address.errors.full_messages).to include("Postal code is invalid. Enter it as follows (e.g. 123-4567)")
+        expect(@buyer_address.errors.full_messages).to include('Postal code is invalid. Enter it as follows (e.g. 123-4567)')
       end
       it 'prefecture_idを選択していないと保存できないこと' do
         @buyer_address.prefecture_id = '1'
@@ -54,17 +53,19 @@ RSpec.describe BuyerAddress, type: :model do
       it 'telephone_numberが9桁以下だと保存できないこと' do
         @buyer_address.telephone_number = '111111111'
         @buyer_address.valid?
-        expect(@buyer_address.errors.full_messages).to include("Telephone number is invalid. Input only number", "Telephone number is too short (minimum is 10 characters)")
+        expect(@buyer_address.errors.full_messages).to include('Telephone number is invalid. Input only number',
+                                                               'Telephone number is too short (minimum is 10 characters)')
       end
       it 'telephone_numberが12桁以上だと保存できないこと' do
         @buyer_address.telephone_number = '111111111111'
         @buyer_address.valid?
-        expect(@buyer_address.errors.full_messages).to include("Telephone number is invalid. Input only number", "Telephone number is too long (maximum is 11 characters)")
+        expect(@buyer_address.errors.full_messages).to include('Telephone number is invalid. Input only number',
+                                                               'Telephone number is too long (maximum is 11 characters)')
       end
       it 'telephone_numberが半角数値でないと保存できないこと' do
         @buyer_address.telephone_number = '１１１１１１１１１１'
         @buyer_address.valid?
-        expect(@buyer_address.errors.full_messages).to include("Telephone number is invalid. Input only number")
+        expect(@buyer_address.errors.full_messages).to include('Telephone number is invalid. Input only number')
       end
       it 'user_idが空だと保存できないこと' do
         @buyer_address.user_id = nil
@@ -76,7 +77,7 @@ RSpec.describe BuyerAddress, type: :model do
         @buyer_address.valid?
         expect(@buyer_address.errors.full_messages).to include("Item can't be blank")
       end
-      it "tokenが空では登録できないこと" do
+      it 'tokenが空では登録できないこと' do
         @buyer_address.token = nil
         @buyer_address.valid?
         expect(@buyer_address.errors.full_messages).to include("Token can't be blank")

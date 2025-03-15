@@ -6,7 +6,6 @@ class BuyersController < ApplicationController
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     if @item.user == current_user || @item.buyer.present?
       redirect_to root_path
-      return
     end
     @buyer_address = BuyerAddress.new
   end
